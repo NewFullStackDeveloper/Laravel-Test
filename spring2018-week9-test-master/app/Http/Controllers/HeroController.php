@@ -34,4 +34,43 @@ class HeroController extends Controller
         // return the view
         return $view;
     }
+
+//LAst question:
+    public function create()
+    {
+        
+        $hero= new Hero();
+
+        $view = view('hero/create');
+        $view->hero = $hero;
+        return $view;
+    }
+
+    public function store(Request $request, $id = null)
+    {
+        $this->validate($request, [
+            'description' => 'required|min:10',
+            'subject' => 'required'
+        ]);
+
+        if ($hero) {
+            $hero = Hero::findOrFail($id);
+        } else {
+            $hero = new Hero();
+        }        
+
+        $hero->fill([
+            'description' => $request->input('description'),
+            'subject' => $request->input('subject')
+        ]);
+
+        // save the hero into the database (
+        $hero->save();
+
+        // flash a success message
+        session()->flash('success_message', 'Success!');
+ 
+        // redirect to detail of hero using the AutoIncremented id
+        return redirect()->action('HeroController@edit', ['id' => $hero->id]);
+    }
 }

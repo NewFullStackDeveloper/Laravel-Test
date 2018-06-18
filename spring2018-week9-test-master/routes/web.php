@@ -21,4 +21,7 @@ Route::get('/hero/{slug}', 'HeroController@show')->name('show slug');
 
 Route::get('/hero/index', 'HeroController@index')->name('index');
 
+//Last question
+Route::get('/hero/new', 'HeroController@create');
+
 Auth::routes();
